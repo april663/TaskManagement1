@@ -1,0 +1,7 @@
+POST /api/workflows/create
+Content-Type: application/json
+
+{
+  "workFlowName": "Default Flow",
+  "description": "Standard workflow"
+}

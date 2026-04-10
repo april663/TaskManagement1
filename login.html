@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Task Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Scripts -->
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">Welcome Back</h1>
+                <p class="card-subtitle">Log in to your account</p>
+            </div>
+            
+            <div id="login-alert" class="alert" style="display: none;"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="userOfficialEmail">Email Address</label>
+                    <input type="email" id="userOfficialEmail" name="userOfficialEmail" class="form-control" placeholder="name@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-2">Sign In</button>
+            </form>
+
+            <div class="text-center mt-4 text-sm">
+                <p><a href="forgot-password.html">Forgot your password?</a></p>
+                <p>Don't have an account? <a href="register.html">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

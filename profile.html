@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Task Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <!-- Scripts -->
+    <script src="js/api.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('profile-form');
+            if(form) {
+                // Pre-fill email
+                const email = localStorage.getItem('userEmail');
+                if(email) document.getElementById('profile-email').value = email;
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    try {
+                        if(window.UI) window.UI.showLoading();
+                        
+                        const formData = new FormData(form);
+                        const payload = Object.fromEntries(formData.entries());
+                        const userId = localStorage.getItem('userId');
+                        
+                        // Example endpoint hit
+                        await API.fetch(`/api/users/profile/${userId}`, {
+                            method: 'PUT',
+                            body: JSON.stringify(payload)
+                        });
+
+                        if(window.UI) window.UI.showToast('Profile updated successfully!', 'success');
+                    } catch (err) {
+                        if(window.UI) window.UI.showToast("Failed to update profile: " + err.message, 'error');
+                    } finally {
+                        if(window.UI) window.UI.hideLoading();
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                TaskManager
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">Dashboard</a>
+                <a href="projects.html" class="nav-item">Projects</a>
+                <a href="boards.html" class="nav-item">Boards</a>
+                <a href="issues.html" class="nav-item">Issues</a>
+                <a href="sprints.html" class="nav-item">Sprints</a>
+                <a href="profile.html" class="nav-item active">Profile</a>
+                
+                <div style="margin-top: 2rem;">
+                    <a href="#" class="nav-item text-error" id="logout-btn">Logout</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-wrapper">
+            <header class="top-navbar">
+                <div class="navbar-left"></div>
+                <div class="navbar-right">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar-initial">U</div>
+                        <span class="user-email" id="user-email-display">user@example.com</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="main-content">
+                <section class="content-section active">
+                    <div class="page-header">
+                        <h2 class="page-title">Profile Update</h2>
+                    </div>
+
+                    <div class="card" style="max-width: 500px;">
+                        <form id="profile-form">
+                            <div class="form-group">
+                                <label class="form-label">Email Address (Read-Only)</label>
+                                <input type="text" id="profile-email" class="form-control" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" name="name" class="form-control" placeholder="Update your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone</label>
+                                <input type="text" name="phone" class="form-control" placeholder="Update your phone">
+                            </div>
+                            <div style="margin-top: 1.5rem;">
+                                <button type="submit" class="btn btn-primary">Save Profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

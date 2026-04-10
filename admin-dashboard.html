@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Task Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <!-- Scripts -->
+    <script src="js/api.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                TaskManager
+            </div>
+            <nav class="sidebar-nav">
+                <!-- Using inline SVGs for modern feel -->
+                <a href="dashboard.html" class="nav-item active">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Admin Dashboard
+                </a>
+                <a href="projects.html" class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    Projects
+                </a>
+                <a href="boards.html" class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
+                    Boards
+                </a>
+                <a href="issues.html" class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Issues
+                </a>
+                <a href="sprints.html" class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Sprints
+                </a>
+                
+                <div style="margin-top: 2rem;">
+                    <a href="#" class="nav-item text-error" id="logout-btn">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        Logout
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-wrapper">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <button class="btn btn-secondary" id="mobile-menu-btn" style="display: none;">Menu</button>
+                    <!-- Search or breadcrumbs could go here -->
+                </div>
+                <div class="navbar-right">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar-initial">U</div>
+                        <span class="user-email" id="user-email-display">user@example.com</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="main-content">
+                
+                <section id="section-admin" class="content-section active">
+                    <div class="page-header">
+                        <h2 class="page-title">Admin Dashboard</h2>
+                    </div>
+
+                    <div class="grid-container">
+                        <!-- Create User Form -->
+                        <div class="card">
+                            <h3 class="card-title">Create New User</h3>
+                            <div id="create-user-alert" class="alert" style="display: none;"></div>
+                            <form id="create-user-form">
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="username" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="userOfficialEmail" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Role</label>
+                                    <select name="role" class="form-control" required>
+                                        <option value="ADMIN">ADMIN</option>
+                                        <option value="MANAGER">MANAGER</option>
+                                        <option value="DEVELOPER">DEVELOPER</option>
+                                        <option value="TESTER">TESTER</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Create User</button>
+                            </form>
+                        </div>
+
+                        <!-- Create Project Form -->
+                        <div class="card">
+                            <h3 class="card-title">Create New Project</h3>
+                            <div id="create-proj-alert" class="alert" style="display: none;"></div>
+                            <form id="create-proj-form">
+                                <div class="form-group">
+                                    <label class="form-label">Project Name</label>
+                                    <input type="text" name="name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Description</label>
+                                    <textarea name="description" class="form-control" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Create Project</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="grid-container mt-4">
+                        <div class="card" style="grid-column: span 2;">
+                            <h3 class="card-title">All Projects</h3>
+                            <div id="admin-projects-list">Loading projects...</div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+</body>
+</html>
